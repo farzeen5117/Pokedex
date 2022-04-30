@@ -11,7 +11,6 @@ def get_pokemon():
 def get_pokemon_dict(url):
     req = requests.get(url)
     print(json.dumps(req.json(), indent=2))
-    
 
 if __name__ == "__main__":
     req = get_pokemon()
