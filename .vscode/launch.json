@@ -4,12 +4,19 @@
     // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
     "version": "0.2.0",
     "configurations": [
+<<<<<<< HEAD
 
+=======
+>>>>>>> 1b4a4a196d1a4713703661dc5ce1b702a55ebf38
         {
             "name": "Python: Current File",
             "type": "python",
             "request": "launch",
+<<<<<<< HEAD
             "program": "${main.py}",
+=======
+            "program": "${file}",
+>>>>>>> 1b4a4a196d1a4713703661dc5ce1b702a55ebf38
             "console": "integratedTerminal",
             "justMyCode": true
         }
