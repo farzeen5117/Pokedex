@@ -1,16 +1,31 @@
 from flask import Flask
 import requests
-import json
+import pprint as pp
 
-# name, base exp, abilities (??), base_stat, sprites, official-artwork(front-default) 
+# name, base exp, abilities (??), base_stat, sprites, official-artwork(front-default) (??)
+
+pokeurl = "https://pokeapi.co/api/v2/pokemon/"
+params = {'limit': 100}
 
 def get_pokemon():
-    req = requests.get("https://pokeapi.co/api/v2/pokemon/")
-    return req
+    res = requests.get(pokeurl)
+    return res
 
 def get_pokemon_dict(url):
-    req = requests.get(url)
-    print(json.dumps(req.json(), indent=2))
+    res = requests.get(url)
+    print(pp.pprint((res.json())))
+
+def filter_poke_data():
+    for offset in range(0, 1000, 100):
+        params['offset'] = offset
+        response = requests.get(pokeurl, params=params)
+        if response.status_code != 200: 
+            print(response.text)
+        else:
+            data = response.json()
+            pp.pprint(data)
+            for item in data['results']:
+                print(item['name'])
 
 if __name__ == "__main__":
     res = get_pokemon()
