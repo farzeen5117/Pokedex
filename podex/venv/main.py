@@ -13,8 +13,13 @@ def get_pokemon_dict(url):
     print(json.dumps(req.json(), indent=2))
 
 if __name__ == "__main__":
-    req = get_pokemon()
-    print(req.json())
-    result = req.json()
+    res = get_pokemon()
+    if res:
+        print(res.json())
+        print("\nsuccessful\n")
+    else:
+        print("something went wrong :(")
+    result = res.json()
     for pokemon in result["results"]:
         get_pokemon_dict(pokemon["url"])
+    filter_poke_data()
