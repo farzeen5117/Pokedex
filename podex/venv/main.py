@@ -23,7 +23,6 @@ def filter_poke_data():
             print(response.text)
         else:
             data = response.json()
-            pp.pprint(data)
             for item in data['results']:
                 print(item['name'])
 
