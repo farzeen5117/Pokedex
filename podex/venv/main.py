@@ -2,7 +2,7 @@ from flask import Flask
 import requests
 import pprint as pp
 
-# name, base exp, abilities (??), sprites, official-artwork(front-default) (??)
+# name, base exp, abilities (??), official-artwork(front-default) (??)
 
 pokeurl = "https://pokeapi.co/api/v2/pokemon/"
 #params = {'limit': 100}
@@ -17,15 +17,18 @@ def get_pokemon():
 
 def get_pokemon_name():
     response = get_pokemon()
-    if response: 
+    if response:  
         poke_dict = response.json()
         for item in poke_dict['results']:
             spec_poke_url = f"https://pokeapi.co/api/v2/pokemon/{item['name']}/"
             spec_poke_res = requests.get(spec_poke_url)
-            spec_poke_dict = spec_poke_res.json()
-            print(f"{item['name']}: {item['url']}")
+            if spec_poke_res:
+                spec_poke_dict = spec_poke_res.json()
+            else:
+                print("Error in retrieveing specific pokemon")
+            print(f"{spec_poke_dict['id']}: {item['name']}, {item['url']}, species: {spec_poke_dict['species']}, height: {spec_poke_dict['height']}, weight: {spec_poke_dict['weight']}, base exp: {spec_poke_dict['base_experience']}")
     else:
-        print("Error")
+        print("Error in get_pokemon()")
 
 if __name__ == "__main__":
     #res = get_pokemon()
