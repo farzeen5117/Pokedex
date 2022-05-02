@@ -31,13 +31,4 @@ def get_pokemon_name():
         print("Error in get_pokemon()")
 
 if __name__ == "__main__":
-    #res = get_pokemon()
-    #if res:
-    #    print(res.json())
-    #    print("\nsuccessful\n")
-    #else:
-    #    print("something went wrong :(")
-    #result = res.json()
-    #for pokemon in result["results"]:
-    #    get_pokemon_dict(pokemon["url"])
     get_pokemon_name()
