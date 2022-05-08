@@ -10,7 +10,6 @@ params = {'limit': 100}
 def get_pokemon():
     res = requests.get(pokeurl)
     return res
-
 #def get_pokemon_dict(url):
 #    res = requests.get(url)
 #    print(pp.pprint((res.json())))
