@@ -5,29 +5,45 @@ import pprint as pp
 # name, base exp, abilities (??), official-artwork(front-default) (??)
 
 pokeurl = "https://pokeapi.co/api/v2/pokemon/"
-params = {'limit': 100}
+params = {'limit': 1000}
 
 class Pokedex:
-    def __init__(self, name = None, id = None):
+    # name => pokemon name
+    # id => pokemon id
+    # output => error code definition for Pokedex
+    # output = 1    (No URL response)
+    # output = 2    (Name and ID not matching)
+    # output = 3    ()
+    def __init__(self, name = None, id = None, output = None):
         if name != None and id != None:
             self.name = name
             self.url = pokeurl + str(self.name)
-            if id == requests.get(self.url).json()["id"]:
-                self.id = id
+            res = requests.get(self.url, params=params)
+            if res:
+                if id == requests.get(self.url, params=params).json()["id"]:
+                    self.id = id
+                else:
+                    print("provided id does not match pokemon :(")
             else:
-                raise ValueError("provided id does not match pokemon")
+                self.output = 1
+                print("response failed :(")
         elif name != None and id == None:
             self.name = name
             self.url = pokeurl + str(self.name)
-            self.id = requests.get(self.url).json()["id"]
+            res = requests.get(self.url, params=params)
+            if res:
+                self.id == requests.get(self.url, params=params).json()["id"]
+            else:
+                self.output = 1
+                print("response failed :(")
         elif name == None and id != None:
             self.id = id
             self.url = pokeurl + str(id)
             self.name = requests.get(self.url).json()["name"]
         elif name == None and id == None:
-            raise TypeError("no name or id provided")
+            print("no name or id provided")
         elif name == None and id == 0:
-            raise ValueError("no such pokemon exists with id 000")
+            print("no such pokemon exists with id 000")
 
     def get_species(self):
         return requests.get("https://pokeapi.co/api/v2/pokemon-species/" + str(self.name)).json()["name"]
@@ -43,6 +59,13 @@ class Pokedex:
 
     def get_sprites(self):
         return requests.get(self.url).json()["sprites"]
+
+def output_1():
+    poke = Pokedex("jsdkjcfhsdklvc")
+    if poke.output == 1:
+        return "pass"
+    else:
+        return "fail"
 
 def get_pokemon():
     res = requests.get(pokeurl)
@@ -69,4 +92,4 @@ def get_pokemon_name():
             print("Error in get_pokemon()")
 
 if __name__ == "__main__":
-    get_pokemon_name()
+    print(output_1())
