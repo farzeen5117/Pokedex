@@ -8,8 +8,6 @@ pokeurl = "https://pokeapi.co/api/v2/pokemon/"
 params = {'limit': 1000}
 
 class Pokedex:
-    # name => pokemon name
-    # id => pokemon id
     # output => error code definition for Pokedex
     # output = 1    (No URL response)
     # output = 2    (Name and ID not matching)
@@ -93,3 +91,5 @@ def get_pokemon_name():
 
 if __name__ == "__main__":
     print(output_1())
+    print(output_2())
+    print(output_3())
