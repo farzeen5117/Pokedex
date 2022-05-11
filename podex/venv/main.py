@@ -4,15 +4,34 @@ import pprint as pp
 
 # name, base exp, abilities (??), official-artwork(front-default) (??)
 
+# def get_pokemon_name():
+#     for offset in range(0, 1000, 100):
+#         params['offset'] = offset
+#         response = requests.get(pokeurl, params=params)
+#         if response:  
+#             poke_dict = response.json()
+#             for item in poke_dict['results']:
+#                 spec_poke_url = f"https://pokeapi.co/api/v2/pokemon/{item['name']}/"
+#                 spec_poke_res = requests.get(spec_poke_url)
+#                 if spec_poke_res:
+#                     spec_poke_dict = spec_poke_res.json()
+#                 else:
+#                     print("Error in retrieveing specific pokemon")
+#                 print(f"{spec_poke_dict['id']}: {item['name']}, {item['url']}, height: {spec_poke_dict['height']}, weight: {spec_poke_dict['weight']}, base exp: {spec_poke_dict['base_experience']}")
+#         else:
+#             print("Error in get_pokemon()")
+
 pokeurl = "https://pokeapi.co/api/v2/pokemon/"
 params = {'limit': 1000}
 
 class Pokedex:
-    # output => error code definition for Pokedex
-    # output = 1    (No URL response)
-    # output = 2    (Name and ID not matching)
-    # output = 3    ()
-    def __init__(self, name = None, id = None, output = None):
+    # name => pokemon name
+    # id => pokemon id
+    # error => error code definition for Pokedex
+    # error = 1    (No URL response)
+    # error = 2    (Name and ID not matching)
+    # error = 3    (No Name or ID provided)
+    def __init__(self, name = None, id = None, error = None):
         if name != None and id != None:
             self.name = name
             self.url = pokeurl + str(self.name)
@@ -21,9 +40,10 @@ class Pokedex:
                 if id == requests.get(self.url, params=params).json()["id"]:
                     self.id = id
                 else:
+                    self.error = 2
                     print("provided id does not match pokemon :(")
             else:
-                self.output = 1
+                self.error = 1
                 print("response failed :(")
         elif name != None and id == None:
             self.name = name
@@ -32,13 +52,20 @@ class Pokedex:
             if res:
                 self.id == requests.get(self.url, params=params).json()["id"]
             else:
-                self.output = 1
+                self.error = 1
                 print("response failed :(")
         elif name == None and id != None:
             self.id = id
             self.url = pokeurl + str(id)
-            self.name = requests.get(self.url).json()["name"]
+            res = requests.get(self.url, params=params)
+            if res:
+                # self.error = 3
+                self.name == requests.get(self.url, params=params).json()["name"]
+            else:
+                self.error = 1
+                print("response failed :(")
         elif name == None and id == None:
+            self.error = 3
             print("no name or id provided")
         elif name == None and id == 0:
             print("no such pokemon exists with id 000")
@@ -58,38 +85,35 @@ class Pokedex:
     def get_sprites(self):
         return requests.get(self.url).json()["sprites"]
 
-def output_1():
-    poke = Pokedex("jsdkjcfhsdklvc")
-    if poke.output == 1:
+def test_name():
+    poke = Pokedex("jlkjkljljlkjlj")
+    if poke.error == 1:
         return "pass"
     else:
         return "fail"
 
-def get_pokemon():
-    res = requests.get(pokeurl)
-    return res
-#def get_pokemon_dict(url):
-#    res = requests.get(url)
-#    print(pp.pprint((res.json())))
+def test_name_number():
+    poke = Pokedex("bulbasaur", 25)
+    if poke.error == 2:
+        return "pass"
+    else:
+        return "fail"
 
-def get_pokemon_name():
-    for offset in range(0, 1000, 100):
-        params['offset'] = offset
-        response = requests.get(pokeurl, params=params)
-        if response:  
-            poke_dict = response.json()
-            for item in poke_dict['results']:
-                spec_poke_url = f"https://pokeapi.co/api/v2/pokemon/{item['name']}/"
-                spec_poke_res = requests.get(spec_poke_url)
-                if spec_poke_res:
-                    spec_poke_dict = spec_poke_res.json()
-                else:
-                    print("Error in retrieveing specific pokemon")
-                print(f"{spec_poke_dict['id']}: {item['name']}, {item['url']}, height: {spec_poke_dict['height']}, weight: {spec_poke_dict['weight']}, base exp: {spec_poke_dict['base_experience']}")
-        else:
-            print("Error in get_pokemon()")
+def test_no_args():
+    poke = Pokedex()
+    if poke.error == 3:
+        return "pass"
+    else:
+        return "fail"
+
+def test_number():
+    poke = Pokedex(id=25)
+    if poke.error == 3:
+        return "pass"
+    else:
+        return "fail"
 
 if __name__ == "__main__":
-    print(output_1())
-    print(output_2())
-    print(output_3())
+    # print(test_name())
+    # print(test_name_number())
+    print(test_number())
