@@ -32,8 +32,10 @@ class Pokedex:
     # error = 2    (Name and ID not matching)
     # error = 3    (No Name or ID provided)
     def __init__(self, name = None, id = None, error = None):
+        self.name = name
+        self.id = id
+        self.error = error
         if name != None and id != None:
-            self.name = name
             self.url = pokeurl + str(self.name)
             res = requests.get(self.url, params=params)
             if res:
@@ -41,32 +43,29 @@ class Pokedex:
                     self.id = id
                 else:
                     self.error = 2
-                    print("provided id does not match pokemon :(")
+                    # print("provided id does not match pokemon :(")
             else:
                 self.error = 1
-                print("response failed :(")
+                # print("response failed :(")
         elif name != None and id == None:
-            self.name = name
             self.url = pokeurl + str(self.name)
             res = requests.get(self.url, params=params)
             if res:
                 self.id == requests.get(self.url, params=params).json()["id"]
             else:
                 self.error = 1
-                print("response failed :(")
+                # print("response failed :(")
         elif name == None and id != None:
-            self.id = id
             self.url = pokeurl + str(id)
             res = requests.get(self.url, params=params)
             if res:
-                # self.error = 3
                 self.name == requests.get(self.url, params=params).json()["name"]
             else:
                 self.error = 1
-                print("response failed :(")
+                # print("response failed :(")
         elif name == None and id == None:
             self.error = 3
-            print("no name or id provided")
+            # print("no name or id provided")
         elif name == None and id == 0:
             print("no such pokemon exists with id 000")
 
@@ -107,13 +106,14 @@ def test_no_args():
         return "fail"
 
 def test_number():
-    poke = Pokedex(id=25)
-    if poke.error == 3:
+    poke = Pokedex(id=394309809838508934095840)
+    if poke.error == 1:
         return "pass"
     else:
         return "fail"
 
 if __name__ == "__main__":
-    # print(test_name())
-    # print(test_name_number())
+    print(test_name())
+    print(test_name_number())
+    print(test_no_args())
     print(test_number())
