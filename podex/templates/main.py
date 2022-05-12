@@ -39,7 +39,7 @@ class Pokedex:
             self.url = pokeurl + str(self.name)
             res = requests.get(self.url, params=params)
             if res:
-                if id == requests.get(self.url, params=params).json()["id"]:
+                if id == res.json()["id"]:
                     self.id = id
                 else:
                     self.error = 2
@@ -51,7 +51,7 @@ class Pokedex:
             self.url = pokeurl + str(self.name)
             res = requests.get(self.url, params=params)
             if res:
-                self.id == requests.get(self.url, params=params).json()["id"]
+                self.id == res.json()["id"]
             else:
                 self.error = 1
                 # print("response failed :(")
@@ -59,7 +59,7 @@ class Pokedex:
             self.url = pokeurl + str(id)
             res = requests.get(self.url, params=params)
             if res:
-                self.name == requests.get(self.url, params=params).json()["name"]
+                self.name == res.json()["name"]
             else:
                 self.error = 1
                 # print("response failed :(")
