@@ -83,6 +83,10 @@ class Pokedex:
 
     def get_sprites(self):
         return requests.get(self.url).json()["sprites"]
+    
+    def get_type(self):
+        types = requests.get(self.url).json()["types"]
+        return dict(types["type"]["name"])
 
 def test_name():
     poke = Pokedex("jlkjkljljlkjlj")
@@ -113,7 +117,9 @@ def test_number():
         return "fail"
 
 if __name__ == "__main__":
-    print(test_name())
-    print(test_name_number())
-    print(test_no_args())
-    print(test_number())
+    # print(test_name())
+    # print(test_name_number())
+    # print(test_no_args())
+    # print(test_number())
+    poke = Pokedex("pikachu", 25)
+    print(poke.get_type())
