@@ -1,5 +1,14 @@
 body {
+    background-color: rgb(252, 244, 163);
     font-family: 'Akshar', sans-serif;
+}
+
+p {
+    color: rgb(0, 0, 83)
+}
+
+ul {
+    color: rgb(0, 0, 83)
 }
 
 div {
@@ -11,7 +20,7 @@ div {
 
 img {
     display: flex;
-    width: 300px;
+    width: 200px;
     justify-content: center;
     align-items: center;
     margin: auto;
@@ -24,6 +33,7 @@ h1 {
 
 h2 {
     text-transform: capitalize;
+    color: rgb(97, 12, 4)
 }
 
 input[type="text"] {
