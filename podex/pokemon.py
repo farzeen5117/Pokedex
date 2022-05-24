@@ -13,7 +13,7 @@ def get_first_pokemon():
 def get_pokemon(id):
     res = requests.get(f"{pokeurl}/pokemon/{id}")
     data = res.json()
-    return render_template("pokemon/pokemon.html", len = len(data.get("types")), pokemon=data)
+    return render_template("pokemon/pokemon.html", type_len = len(data.get("types")), stat_len = len(data.get("stats")), pokemon=data)
 
 @pokebp.route("/handle_pokemon", methods=["POST"])
 def handle_pokemon():

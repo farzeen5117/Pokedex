@@ -5,11 +5,16 @@ body {
 div {
     display: flex;
     flex-direction: column;
+    justify-content: center;
     align-items: center;
 }
 
 img {
+    display: flex;
     width: 300px;
+    justify-content: center;
+    align-items: center;
+    margin: auto;
 }
 
 h1 {
@@ -22,5 +27,6 @@ h2 {
 }
 
 input[type="text"] {
-    width: 350px;
+    margin-top: 15px;
+    width: 400px;
 }
