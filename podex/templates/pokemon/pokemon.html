@@ -9,29 +9,34 @@
 {% block content %}
 <main>
     <div>
-        <form action="{{ url_for('pokemon.handle_pokemon') }}" method="post">
-            <input type="text" name="pokemon" placeholder="Search for a Pokémon by name or National Pokédex number">
-            <input type="submit" value="Find Pokemon">
-        </form>
-        <h2>{{ pokemon.name }}</h2>
-        <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/{{ pokemon.id }}.png", alt="{{ pokemon.name }}"/>
-        <p>National Pokédex Number: #{{ pokemon.id }}</p>
-        <p>Height: {{ pokemon.height }}</p>
-        <p>Weight: {{ pokemon.weight }}</p>
-        <p>Base Experience: {{ pokemon.base_experience }}</p>
-        <p>Type(s): 
-            {%for i in range(0, type_len)%}
-                <span>{{ pokemon.types[i].type.name }}</span>,
-            {%endfor%}
-        </p>
-        <p>Base Stats:
-            <ul>
-            {%for i in range(0, stat_len)%}
-                <li>{{ pokemon.stats[i].stat.name }}: {{ pokemon.stats[i].base_stat }}</li>
-            {%endfor%}
-            </ul>
-        </p>
-        {{pokemon}}
+        {% if pokemon %}
+            <form action="{{ url_for('pokemon.handle_pokemon') }}" method="post">
+                <input type="text" name="pokemon" placeholder="Search for a Pokémon by name or National Pokédex number">
+                <input type="submit" value="Find Pokemon">
+            </form>
+            <h2>{{ pokemon.name }}</h2>
+            <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/{{ pokemon.id }}.png", alt="{{ pokemon.name }}"/>
+            <p>National Pokédex Number: #{{ pokemon.id }}</p>
+            <p>Height: {{ pokemon.height }}</p>
+            <p>Weight: {{ pokemon.weight }}</p>
+            <p>Base Experience: {{ pokemon.base_experience }}</p>
+            <p>Type(s): 
+                {%for i in range(0, type_len)%}
+                    <span>{{ pokemon.types[i].type.name }}</span>,
+                {%endfor%}
+            </p>
+            <p>Base Stats:
+                <ul>
+                {%for i in range(0, stat_len)%}
+                    <li>{{ pokemon.stats[i].stat.name }}: {{ pokemon.stats[i].base_stat }}</li>
+                {%endfor%}
+                </ul>
+            </p>
+            {{pokemon}}
+        {% else %}
+            <h1>Error 404: Page Not Found.</h1>
+            <h3>Please search for a different Pokemon.</h3>
+        {% endif %}
     </div>
 </main>
 {% endblock %}

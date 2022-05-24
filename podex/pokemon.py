@@ -12,6 +12,8 @@ def get_first_pokemon():
 @pokebp.route("/<string:id>")
 def get_pokemon(id):
     res = requests.get(f"{pokeurl}/pokemon/{id}")
+    if res.status_code != 200:
+        return render_template("pokemon/pokemon.html", pokemon={})
     data = res.json()
     return render_template("pokemon/pokemon.html", type_len = len(data.get("types")), stat_len = len(data.get("stats")), pokemon=data)
 
