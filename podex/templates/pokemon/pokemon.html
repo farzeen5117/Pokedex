@@ -19,7 +19,6 @@
         <p>type: 
         {%for i in range(0, len)%}
             {{ pokemon.types[i].type.name }}
-        </p>
         {%endfor%}
         <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/{{ pokemon.id }}.png", alt="{{ pokemon.name }}"/>
         {{pokemon}}
